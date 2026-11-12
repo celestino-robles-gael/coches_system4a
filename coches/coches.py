@@ -39,8 +39,6 @@ class Coches:
     def asientos(self):
         return self._asientos
 
-
-
     @velocidad.setter
     def velocidad(self, velocidad):
         self._velocidad = velocidad
@@ -65,7 +63,6 @@ class Coches:
     def asientos(self, asientos):
         self._asientos = asientos
 
-
     def insertar(self):
         try:
             cursor.execute("insert into coches values (null, %s, %s, %s, %s, %s, %s)", (self._marca, self._color, self._modelo, self._velocidad, self._potencia, self._asientos))
@@ -85,7 +82,7 @@ class Coches:
     @staticmethod
     def eliminar(id):
         try:
-            cursor.execute("delete from coches where id=%s",(id,))
+            cursor.execute("delete from coches where id=%s", (id,))
             conexion.commit()
             return True
         except:
@@ -93,8 +90,16 @@ class Coches:
 
     def actualizar(self, id):
         try:
-            cursor.execute("update coches set marca=%s, color=%s, modelo=%s, velocidad=%s, potencia=%s, asientos=%s where id=%s",(self._marca, self._color, self._modelo, self._velocidad, self._potencia, self._asientos, id))
+            cursor.execute("update coches set marca=%s, color=%s, modelo=%s, velocidad=%s, potencia=%s, asientos=%s where id=%s", (self._marca, self._color, self._modelo, self._velocidad, self._potencia, self._asientos, id))
             conexion.commit()
             return True
-        except: 
+        except:
             return False
+
+    @staticmethod
+    def buscar(id):
+        try:
+            cursor.execute("select * from coches where id=%s", (id,))
+            return cursor.fetchall()
+        except:
+            return []
